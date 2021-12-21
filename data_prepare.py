@@ -33,7 +33,7 @@ for count, filename in enumerate(os.listdir(path)):
 #################################################################################
 # split in to sub folder
 source = 'Wiki_Data/fmt_txt/'
-N = 350  # the number of files in seach subfolder folder
+N = 150  # the number of files in seach subfolder folder
 def move_files(abs_dirname):
     #Move files into subdirectories
     files = [os.path.join(abs_dirname, f) for f in os.listdir(abs_dirname)]

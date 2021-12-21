@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <title>QA System</title>
+    <link rel="stylesheet" type="text/CSS" href="{{ url_for('static', filename='stylesheets/style.css') }}">
+    <link rel="stylesheet" type="text/CSS" href="style.css">
 </head>
-
 <body>
-    <style type="text/css">
-    textarea.html-text-box {background-color:ffffff;background-repeat:no-repeat;background-attachment:fixed;border-width:1;border-style:solid;border-color:cccccc;font-family:Arial;font-size:10pt;color:000000;}
-    input.html-text-box {background-color:ffffff;font-family:Arial;font-size:10pt;color:000000;}
-    </style>
+
+<div class="container">
     <form method="post" action="http://localhost:8777/qna">
+        <div>
+        <label><strong>Your Question</strong></label>
+        </div>
         <textarea  name="question" cols="100" rows="2" class="html-text-box">{% if question is not none %}{{ question }}{% endif %}</textarea >
         </br>
-        <button type="submit" class="btn btn-primary float-right">Run</button>
-        </br></br>
-        <textarea name="ans" cols="100" rows="10" class="html-text-box">{% if ans is not none %}{{ ans }}{% endif %}</textarea>
-        
+        <button id="submit" type="submit" >Search</button>
+        <div>
+            <label><strong>Answer</strong></label>
+        </div>
+        <textarea name="ans" cols="100" rows="5">{% if ans is not none %}{{ ans }}{% endif %}</textarea>
     </form>
+</div>
 </body>
 
 </html>

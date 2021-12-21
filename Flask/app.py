@@ -1,4 +1,3 @@
-
 # import packages
 import json
 import os
@@ -14,11 +13,16 @@ from haystack.pipelines import ExtractiveQAPipeline
 #application settings
 app = Flask(__name__)
 CORS(app)
-# ElasticSearch server host information
-app.config["host"] = "0.0.0.0"
-app.config["username"] = ""
-app.config["password"] = ""
-app.config["port"] = "9200"
+#initialization of the Haystack Elasticsearch document storage
+document_store = ElasticsearchDocumentStore(host="qa-system.es.us-central1.gcp.cloud.es.io", port="9243",
+scheme="https", username="elastic", password="6e7MQjacsRjCDKI2lKHsWVzv", index="documents")
+print('Document Store ready...!')
+# initialization of ElasticRetriever
+retriever = ElasticsearchRetriever(document_store= document_store)
+print('Retriever ready...!')
+# Reader model
+reader = FARMReader(model_name_or_path="my_model/", use_gpu=True)
+print('Reader ready...!')
 
 @app.route('/')
 def home():
@@ -33,42 +37,44 @@ def qna():
         question = request.form['question']
         # index is the target document where queries need to sent.
         #index = request.form['index']
+       
         
-        #initialization of the Haystack Elasticsearch document storage
-        document_store = ElasticsearchDocumentStore(host="localhost",port="9200", username="", password="", index="document")
-        
-        # Reader model
-        #reader = FARMReader(model_name_or_path="deepset/roberta-base-squad2", use_gpu=True)
-
-        # initialization of ElasticRetriever
-        retriever = ElasticsearchRetriever(document_store= document_store)
         
         # Pipeline to answer questions.
         #pipe = ExtractiveQAPipeline(reader, retriever)
-        
+        #print('Pipe ready...!')
+
         candidate_documents = retriever.retrieve(
-        query=question, top_k=3,
-        )
+        query=question, top_k=10,)
         #prediction=candidate_documents[0]
         '''
+        for doc in candidate_documents:
+            print(doc)
+        
         prediction = pipe.run(
         #query="Một trong những nữ diễn viên kịch nói đầu tiên ở Việt Nam?", params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 5}}
         #query="huyện Quỳnh Phụ thuộc tỉnh nào?", params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 5}}
         #query="trụ cột của nền kinh tế Qatar là gì?", params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 5}}
         #query="Voldemort là ai", params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 5}}
-        query= question, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 5}}
+        query= question, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 3}}
         )'''
-        
+        print("Reader running...")
+        result = reader.predict(
+            query=question,
+            documents=candidate_documents,
+            top_k=3)
         print("Query running...")
         # Document <-> Retriever
         # Answer from Document <-> Reader
-        answ= [doc for doc in candidate_documents]
+        answ=  result["answers"][0].answer
         
     else:
         question = ""
         answ = ""
-    print(question)
-    print(answ)
+
+    #test on cmd
+    #print(question)
+    #print(answ)
 
     return render_template("index.html",question=question, ans= answ) #jsonify([doc.to_json() for doc in candidate_documents])
 
