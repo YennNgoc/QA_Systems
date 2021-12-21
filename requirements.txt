@@ -1,0 +1,18 @@
+# QA_Systems/Flask/app.py: 6
+Flask == 1.1.4
+
+# QA_Systems/Flask/app.py: 5
+Flask_Cors == 3.0.10
+
+# QA_Systems/Flask/app.py: 8,9,10,11
+# QA_Systems/document_store.py: 3,6,7
+# QA_Systems/run.py: 1,2,3,4
+# QA_Systems/test_component/load_reader.py: 1
+# QA_Systems/test_component/test_retriver.py: 1,5
+#django_haystack == 2.8.1
+
+# QA_Systems/data_prepare.py: 3
+pandas == 0.25.3
+
+# QA_Systems/test_component/query.py: 1
+requests == 2.22.0

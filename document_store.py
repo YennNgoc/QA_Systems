@@ -1,11 +1,16 @@
+#delete index cmd: curl -XDELETE localhost:9200/document
+
 from haystack.document_stores import ElasticsearchDocumentStore
-document_store = ElasticsearchDocumentStore(host="localhost",port="9200", username="", password="", index="document")
+document_store = ElasticsearchDocumentStore(host="qa-system.es.us-central1.gcp.cloud.es.io", port="9243",
+scheme="https", username="elastic", password="6e7MQjacsRjCDKI2lKHsWVzv", index="documents")
 
 from haystack.nodes import PreProcessor
 from haystack.utils import convert_files_to_dicts 
 
-doc_dir_lists = ['Wiki_Data/fmt_txt/001','Wiki_Data/fmt_txt/002','Wiki_Data/fmt_txt/003',
-'Wiki_Data/fmt_txt/004','Wiki_Data/fmt_txt/005']
+doc_dir_lists = ['Wiki_Data/fmt_txt/001','Wiki_Data/fmt_txt/002','Wiki_Data/fmt_txt/003', 
+                    'Wiki_Data/fmt_txt/004','Wiki_Data/fmt_txt/005','Wiki_Data/fmt_txt/006',
+                    'Wiki_Data/fmt_txt/007','Wiki_Data/fmt_txt/008','Wiki_Data/fmt_txt/009',
+                    'Wiki_Data/fmt_txt/010','Wiki_Data/fmt_txt/011','Wiki_Data/fmt_txt/012']
 
 def push_DataToElastic(doc_dir):
     alldocs=[]
@@ -33,4 +38,5 @@ def push_DataToElastic(doc_dir):
     print ("Done")
 
 for doc_dir in doc_dir_lists:
+    print(doc_dir)
     push_DataToElastic(doc_dir)
