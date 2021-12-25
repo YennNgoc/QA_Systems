@@ -1,8 +1,8 @@
 #delete index cmd: curl -XDELETE localhost:9200/document
 
 from haystack.document_stores import ElasticsearchDocumentStore
-document_store = ElasticsearchDocumentStore(host="qa-system.es.us-central1.gcp.cloud.es.io", port="9243",
-scheme="https", username="elastic", password="6e7MQjacsRjCDKI2lKHsWVzv", index="documents")
+document_store = ElasticsearchDocumentStore(host="host_address", port="port_address",
+scheme="https", username="", password="", index="documents")
 
 from haystack.nodes import PreProcessor
 from haystack.utils import convert_files_to_dicts 
