@@ -14,8 +14,8 @@ from haystack.pipelines import ExtractiveQAPipeline
 app = Flask(__name__)
 CORS(app)
 #initialization of the Haystack Elasticsearch document storage
-document_store = ElasticsearchDocumentStore(host="qa-system.es.us-central1.gcp.cloud.es.io", port="9243",
-scheme="https", username="elastic", password="6e7MQjacsRjCDKI2lKHsWVzv", index="documents")
+document_store = ElasticsearchDocumentStore(host="host_address", port="port_address",
+scheme="https", username="", password="", index="documents")
 print('Document Store ready...!')
 # initialization of ElasticRetriever
 retriever = ElasticsearchRetriever(document_store= document_store)
